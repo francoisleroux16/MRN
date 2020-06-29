@@ -8,6 +8,12 @@ import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
+import os
+
+from tkinter import *
+from tkinter.ttk import *
+from tkinter.filedialog import askopenfile
+
 def gen_details_y(num):
     '''Number is 2 = Cpy, 3= Cpp. 5 = Cps, 4= Cpt, 6 = Cpts
     Returns name, description'''
@@ -153,7 +159,7 @@ def plotcarpet(data):
         yaw_label[k] = r'Yaw = '+str(yaw)+r'$\degree$'
         plt.scatter(plot2[:,2],plot2[:,3])
         plt.plot(plot2[:,2],plot2[:,3], label='Yaw')
-    ax = plt.gca().add_artist(first_legend)
+    plt.gca().add_artist(first_legend)
     plt.grid(b=True, which='major', color='#666666', linestyle='-') 
     plt.minorticks_on() #carpet
     plt.grid(b=True, which='minor', color='#999999', linestyle='-', alpha=0.2) 
@@ -163,8 +169,20 @@ def plotcarpet(data):
     plt.title(r'$C_{py}$ vs $C_{pp}$ over Yaw and Pitch')
     plt.show()
 
-path = r'D:\Tuks\2020\MRN\Samples\Govender_Data.xlsx'
-sheetname = 'NewProbe_coeffs'
+# path = r'D:\Tuks\2020\MRN\Samples\Govender_Data.xlsx'
+# sheetname = 'NewProbe_coeffs'
 # path = r'D:\Tuks\2020\MRN\Code\Test.xlsx'
-probe_data = get_data(path)
+# path = input("Please enter path to excel file")
+# probe_data = get_data(path.encode('unicode-escape').decode())
 
+root = Tk()
+
+def open_file():
+    global filename
+    filename = filedialog.askopenfilename(title='Select file')
+    # x =os.system(filename)
+    # print(content)
+        
+btn = Button(root, text='Open', command = lambda:open_file())
+btn.pack(side = TOP, pady=10)
+mainloop()
